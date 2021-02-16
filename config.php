@@ -8,7 +8,7 @@ define('HTTP_SERVER', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/');
 
 
 // HTTPS
-define('HTTPS_SERVER', 'http://'.$_SERVER['HTTP_HOST'].$script_name);
+define('HTTPS_SERVER', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/'.);
 
 // DIR
 define('DIR_APPLICATION', __DIR__. '/catalog/');

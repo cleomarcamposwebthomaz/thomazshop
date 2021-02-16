@@ -1609,3 +1609,4 @@
 16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
 16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
 16-02-2021 14:28:24 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 13
+16-02-2021 14:31:10 - PHP Warning:  file_put_contents(/opt/lampp/htdocs/thomazshop/vqmod/checked.cache): failed to open stream: Permission denied no arquivo /opt/lampp/htdocs/thomazshop/vqmod/vqmod.php na linha 151
