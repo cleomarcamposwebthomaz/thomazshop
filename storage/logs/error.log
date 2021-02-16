@@ -1595,3 +1595,17 @@
 16-02-2021 11:55:31 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /Applications/MAMP/htdocs/thomazshop/system/library/db/mysqli.php na linha 13
 16-02-2021 11:57:04 - Error:  Call to undefined function pr() no arquivo /Applications/MAMP/htdocs/thomazshop/catalog/controller/onecheckout/guest.php na linha 208
 16-02-2021 13:37:20 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /Applications/MAMP/htdocs/thomazshop/system/library/db/mysqli.php na linha 13
+16-02-2021 14:15:23 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 13
+16-02-2021 14:19:16 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 13
+16-02-2021 14:19:29 - Exception:  Erro: Table 'thomazshop.oc_translation' doesn't exist<br>Código: 1146<br>SELECT * FROM `oc_translation` WHERE store_id = '0' AND language_id = '0' AND (route = 'engb' OR route = '') no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 43
+16-02-2021 14:19:30 - Exception:  Erro: Table 'thomazshop.oc_translation' doesn't exist<br>Código: 1146<br>SELECT * FROM `oc_translation` WHERE store_id = '0' AND language_id = '0' AND (route = 'engb' OR route = '') no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 43
+16-02-2021 14:19:30 - Exception:  Erro: Table 'thomazshop.oc_translation' doesn't exist<br>Código: 1146<br>SELECT * FROM `oc_translation` WHERE store_id = '0' AND language_id = '0' AND (route = 'engb' OR route = '') no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 43
+16-02-2021 14:19:52 - PHP Warning:  copy(/opt/lampp/htdocs/thomazshop/image/cache/catalog/banner1-536x337.jpg): failed to open stream: Permission denied no arquivo /opt/lampp/htdocs/thomazshop/catalog/model/tool/image.php na linha 41
+16-02-2021 14:19:52 - PHP Warning:  copy(/opt/lampp/htdocs/thomazshop/image/cache/catalog/banner3-536x337.jpg): failed to open stream: Permission denied no arquivo /opt/lampp/htdocs/thomazshop/catalog/model/tool/image.php na linha 41
+16-02-2021 14:19:52 - PHP Warning:  copy(/opt/lampp/htdocs/thomazshop/image/cache/catalog/banner2-536x337.jpg): failed to open stream: Permission denied no arquivo /opt/lampp/htdocs/thomazshop/catalog/model/tool/image.php na linha 41
+16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
+16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
+16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
+16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
+16-02-2021 14:23:59 - PHP Notice:  Undefined index: path no arquivo /opt/lampp/htdocs/thomazshop/catalog/controller/startup/seo_url.php na linha 122
+16-02-2021 14:28:24 - Exception:  Erro: Não foi possível conectar-se ao banco de dados! no arquivo /opt/lampp/htdocs/thomazshop/system/library/db/mysqli.php na linha 13

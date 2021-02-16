@@ -1,18 +1,20 @@
 <?php
+$script_name = (explode('/', $_SERVER['SCRIPT_NAME']))[1];
+
 // HTTP
-define('HTTP_SERVER', 'http://localhost/thomazshop/admin/');
-define('HTTP_CATALOG', 'http://localhost/thomazshop/');
+define('HTTP_SERVER', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/admin/');
+define('HTTP_CATALOG', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/');
 
 // HTTPS
-define('HTTPS_SERVER', 'http://localhost/thomazshop/admin/');
-define('HTTPS_CATALOG', 'http://localhost/thomazshop/');
+define('HTTPS_SERVER', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/admin/');
+define('HTTPS_CATALOG', 'http://'.$_SERVER['HTTP_HOST'].'/'.$script_name.'/');
 
 // DIR
-define('DIR_APPLICATION', '/Applications/MAMP/htdocs/thomazshop/admin/');
-define('DIR_SYSTEM', '/Applications/MAMP/htdocs/thomazshop/system/');
-define('DIR_IMAGE', '/Applications/MAMP/htdocs/thomazshop/image/');
-define('DIR_STORAGE', '/Applications/MAMP/htdocs/thomazshop/storage/');
-define('DIR_CATALOG', '/Applications/MAMP/htdocs/thomazshop/catalog/');
+define('DIR_APPLICATION', dirname(__DIR__) . '/admin/');
+define('DIR_SYSTEM', dirname(__DIR__) . '/system/');
+define('DIR_IMAGE', dirname(__DIR__) . '/image/');
+define('DIR_STORAGE', dirname(__DIR__) . '/storage/');
+define('DIR_CATALOG', dirname(__DIR__) . '/catalog/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
@@ -27,7 +29,7 @@ define('DIR_UPLOAD', DIR_STORAGE . 'upload/');
 define('DB_DRIVER', 'mysqli');
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', '');
 define('DB_DATABASE', 'thomazshop');
 define('DB_PORT', '3306');
 define('DB_PREFIX', 'oc_');

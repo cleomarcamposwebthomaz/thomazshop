@@ -5,6 +5,4 @@ storage/sessions
 
 vqmod/vqcache
 
-admin/config.php
-config.php
 *.sql
