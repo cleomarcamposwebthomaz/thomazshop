@@ -1,0 +1,145 @@
+{{ header }}
+
+<div id="checkout-checkout" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="row">
+    {{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+
+    <div id="content" class="{{ class }}">{{ content_top }}
+      <h1>Para finalizar sua compra, informe seu e-mail. <small>Rápido. Fácil. Seguro.</small></h1>
+
+      <div class="row mt-5">
+        <div class="col-sm-5">
+          <form method="get" action="{{ checkout_url }}" id="block-login">
+              {# <input type="hidden" name="route" value="checkout/checkout"> #}
+
+              <div class="alert alert-danger" style="display: none;">
+                E-mail inválido
+              </div>
+
+              <div class="form-group">
+                <input type="email" name="email" required="required" class="form-control" value="" placeholder="seu@email.com" autofocus="autofocus" id="checkout-continue-email">
+              </div>
+
+              <div class="form-group" style="display: none;">
+                <input type="password" name="password" value="" placeholder="{{ entry_password }}" id="input-password" class="form-control" />
+              </div>
+
+              <button class="btn btn-padrao button-continue" style="margin-top: 15px; margin-bottom: 15px;" id="button-continue">
+                <i class="fa fa-arrow-right"></i> Continuar
+              </button>
+
+              <button class="btn btn-padrao btn-login" style="margin-top: 15px; margin-bottom: 15px; display: none;" id="button-login">
+                <i class="fa fa-arrow-right"></i> Continuar
+              </button>
+            </form>
+        </div>
+      </div>
+
+      <div class="col-sm-12 box">
+        <div class="col-sm-12 item"> <i class="fa fa-check"></i> Identificar seu perfil</div>
+        <div class="col-sm-12 item"> <i class="fa fa-check"></i> Notificar sobre o andamento do seu pedido</div>
+        <div class="col-sm-12 item"> <i class="fa fa-check"></i> Gerenciar seu histórico de compras</div>
+        <div class="col-sm-12 item"> <i class="fa fa-check"></i> Acelerar o preenchimento de suas informações</div>
+      </div>
+
+      {{ content_bottom }}
+    </div>
+    <style type="text/css">
+      .box { margin-bottom: 15px; padding-top: 15px; padding-bottom: 15px; background-color: #f1f1f1; max-width: 500px; margin-left: auto; margin-right: auto; }
+      .box .item i { color: #32b309; }
+
+      #block-login input { height: 50px; margin-top: 15px; }
+    </style>
+
+    {{ column_right }}</div>
+</div>
+
+<script type="text/javascript">
+
+$('#button-continue').click(function(e) {
+  e.preventDefault();
+  $.ajax({
+    url: '{{ exists }}',
+    data: $('#block-login :input'),
+    type: 'POST',
+
+    beforeSend: function() {
+      $('#button-continue').button('loading');
+    },
+
+    success: function(json) {
+      $('.alert-danger').hide();
+
+      if (json.status) {
+        $('#button-continue').hide();
+        $('#button-login').show();
+        $('#input-password').parent().show();
+      } else if(json.invalid) {
+        $('.alert-danger').show();
+        $('#button-continue').button('reset');
+      } else {
+        return location.href = "index.php?route=checkout/checkout";
+      }
+
+      console.log(json)
+    }
+  });
+});
+
+// Cliente efetua o login
+$('#button-login').click(function(e) {
+  e.preventDefault();
+
+  $.ajax({
+      url: 'index.php?route=checkout/login/save',
+      type: 'post',
+      data: $('#block-login :input'),
+      dataType: 'json',
+
+      beforeSend: function() {
+          $('#button-login').button('loading');
+      },
+
+      complete: function() {
+          $('#button-login').button('reset');
+      },
+
+      success: function(json) {
+         //  $('.alert-dismissible, .text-danger').remove();
+         //  $('.form-group').removeClass('has-error');
+
+          if (json['redirect']) {
+            return location.href = "index.php?route=checkout/checkout";
+          }
+
+          if (json['error']) {
+              $('#block-login').append('<div class="mt-3 alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '</div>');
+
+              // Highlight any found errors
+              $('input[name=\'email\']').parent().addClass('has-error');
+              $('input[name=\'password\']').parent().addClass('has-error');
+         }
+
+         console.log(json)
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+  });
+});
+</script>
+
+{{ footer }}

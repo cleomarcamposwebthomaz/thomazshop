@@ -1,0 +1,27 @@
+{% if categories %}
+  <ul class="menu">
+    {% for category in categories %}
+    {% if category.children %}
+    <li class="dropdown">
+      <a class="transition d-flex" href="{{ category.href }}">{{ category.name }} <i class="fa fa-caret-down align-self-center ml-1" aria-hidden="true"></i></a>
+      <div class="submenu">
+          <div class="dropdown-inner">
+              {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+              <ul class="list-unstyled">
+                {% for child in children %}
+                <li><a class="father" href="{{ child.href }}">{{ child.name }}</a></li>
+                {% for grandchild in child.grandchildren %}
+                  <li><a href="{{ grandchild.href }}">{{ grandchild.name }}</a></li>
+                {% endfor %}
+                {% endfor %}
+              </ul>
+              {% endfor %}
+          </div>
+    </li>
+    {% else %}
+    <li><a class="transition" href="{{ category.href }}">{{ category.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}
+<div class="clear"></div>

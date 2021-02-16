@@ -1,0 +1,215 @@
+{{ header }}
+{% include 'default/template/common/breadcrumb.twig' %}
+<div id="checkout-cart" class="container">
+
+  {% if attention %}
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ attention }}
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  {% endif %}
+  {% if success %}
+  <script type="text/javascript">
+      Swal.fire({
+        html: "{{ success }}",
+        icon: 'success',
+        position: 'bottom-end',
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        toast:true
+      });
+  </script>
+  {% endif %}
+  {% if error_warning %}
+  <script type="text/javascript">
+      Swal.fire({
+        html: "{{ error_warning }}",
+        icon: 'error',
+        position: 'bottom-end',
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        toast:true,
+        showClass: {
+            popup: 'toast-error'
+          },
+      });
+  </script>
+  {% endif %}
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    <div id="content" class="{{ class }}">
+      {{ content_top }}
+      {% if heading_title_cart %}
+      <h1>{{ heading_title_cart }}
+        {% if weight %}
+        &nbsp;({{ weight }})
+        {% endif %} </h1>
+        {% endif %}
+      <form action="{{ action }}" method="post" enctype="multipart/form-data">
+        <div id="table-cart">
+          {% for product in products %}
+          <div class="item d-flex justify-content-between">
+
+            <!-- image -->
+            <div class="col-img">
+              {% if product.thumb %}
+                <a href="{{ product.href }}"><img src="{{ product.thumb }}" alt="{{ product.name }}" title="{{ product.name }}" class="img-responsive" /></a>
+              {% endif %}
+            </div>
+
+            <!-- title -->
+            <div class="col-title flex">
+                <h4>
+                  <a href="{{ product.href }}">{{ product.name }}</a>
+                  {% if not product.stock %}
+                  <span class="text-danger">***</span>
+                  {% endif %}
+                </h4>
+                {% if product.option %}
+                {% for option in product.option %}
+                <small>{{ option.name }}: {{ option.value }}</small>
+                <br />
+                {% endfor %}
+                {% endif %}
+                {% if product.reward %} <br />
+                <small>{{ product.reward }}</small> {% endif %}
+                {% if product.recurring %} <br />
+                <span class="label label-info">{{ text_recurring_item }}</span> <small>{{ product.recurring }}</small>
+                {% endif %}
+            </div>
+
+            <!-- price -->
+            <div class="col-price flex">
+              <h4>{{ product.price }}</h4>
+            </div>
+            <!-- quantity -->
+            <div class="col-quantity flex d-flex">
+
+                  <div class="d-flex">
+                      <div><button onclick="decrease({{ product.cart_id }})" class="btn btn-default"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
+                      <div><input type="text" name="quantity[{{ product.cart_id }}]" value="{{ product.quantity }}" size="1" style="width:60px;" class="form-control ml-2 mr-2 input-quantity" /></div>
+                      <div><button onclick="increase({{ product.cart_id }})" class="btn btn-default"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                  </div>
+                  <a style="cursor:pointer" class="text-danger ml-4 mt-3" type="button" data-toggle="tooltip" title="{{ button_remove }}" onclick="cart.remove('{{ product.cart_id }}');"><i class="fa fa-remove"></i></a>
+
+            </div>
+            <!-- total -->
+            <div class="col-total">
+              <h5>{{ column_total }}: {{ product.total }}</h5>
+            </div>
+          </div>
+          {% endfor %}
+
+          <div class="clear40"></div>
+          {% for voucher in vouchers %}
+          <div class="item">
+            <div>
+                {% if voucher.thumb %} <img src="{{ voucher.thumb }}" alt="{{ voucher.description }}" title="{{ voucher.description }}" class="img-thumbnail" />{% endif %}
+            </div>
+            <div>
+              {{ voucher.description }}
+            </div>
+            <div>
+            </div>
+            <div>
+                <div class="input-group btn-block" style="max-width: 200px;">
+                  <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
+                  <span class="input-group-btn">
+                  <button type="button" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger" onclick="voucher.remove('{{ voucher.key }}');"><i class="fa fa-times-circle"></i></button>
+                  </span>
+                </div>
+            </div>
+            <div>
+              {{ voucher.amount }}
+            </div>
+            <div>
+              {{ voucher.amount }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </form>
+
+      {% if modules %}
+      <h2>{{ text_next }}</h2>
+      <p>{{ text_next_choice }}</p>
+      <div class="panel-group" id="accordion">
+      {% for module in modules %}
+        {{ module }}
+        {% endfor %} </div>
+      {% endif %} <br />
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-8">
+          <table class="table table-bordered">
+            {% for total in totals %}
+            <tr>
+              <td class="text-right"><strong>{{ total.title }}:</strong></td>
+              <td class="text-right">{{ total.text }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+      <div class="buttons clearfix">
+        <div class="pull-left"><a href="{{ continue }}" class="btn btn-default">{{ button_shopping }}</a></div>
+        <div class="pull-right"><a href="{{ checkout }}" class="btn btn-primary">{{ button_checkout }}</a></div>
+      </div>
+      {{ content_bottom }}
+    </div>
+    {{ column_right }}
+  </div>
+</div>
+
+<a href="{{ checkout }}" class="button-cart-fixed p-4 d-flex justify-content-between btn-primary">
+    <div>
+        <h4>
+            {% for total in totals %}
+                {% if total.title == "Total" %}
+                <strong class="hidden-xs">{{ total.title }}:</strong> {{ total.text }}
+
+                <small>
+                    {% if config_semjuros != 1 %}
+                      <div class="clear"></div>
+                      {% set newPrice = total.text[2:] %}
+                      {% set newPrice = newPrice|replace({'.': null}) %}
+                      {% set newPrice = newPrice|replace({',': '.'}) %}
+                      {% set valorParcela = newPrice / config_semjuros %}
+                      {% set valorParcela = newPrice / config_semjuros %}
+                      {{config_semjuros}}x de <b>R$ {{ valorParcela|number_format(2, ',', '.') }}</b>
+                    {% else %}
+                      <i class="fa fa-credit-card" aria-hidden="true"></i> Em até 12x (com juros)
+                    {% endif %}
+                </small>
+                {% endif %}
+            {% endfor %}
+        </h4>
+    </div>
+    <div class="align-self-center">
+        <div class="button-cart-fixed-text">{{ button_checkout }}</div>
+    </div>
+</a>
+
+<script type="text/javascript">
+  function decrease(item){
+    qtd = parseInt($('input[name="quantity['+item+']"').val());
+    if(qtd != 1){
+      $('input[name="quantity['+item+']"').val(qtd-1);
+    }
+  }
+  function increase(item){
+    qtd = parseInt($('input[name="quantity['+item+']"').val());
+    $('input[name="quantity['+item+']"').val(qtd+1);
+  }
+
+  $('.input-quantity').blur(function(){
+      $(this).parents('form').submit();
+  });
+</script>
+{{ footer }}

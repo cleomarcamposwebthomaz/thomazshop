@@ -1,0 +1,3 @@
+{% for module in modules %}
+    {{ module|replace({'{{ telephone }}':telephone, '{{ redes_sociais }}':redes_sociais, '{{ config_semjuros }}':config_semjuros}) }}
+{% endfor %}

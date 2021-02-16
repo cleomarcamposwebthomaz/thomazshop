@@ -1,0 +1,9 @@
+<div class="breadcrumb">
+    <div class="container">
+        <ul class="list-unstyled d-flex m-0">
+          {% for breadcrumb in breadcrumbs %}
+          <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+          {% endfor %}
+        </ul>
+    </div>
+</div>

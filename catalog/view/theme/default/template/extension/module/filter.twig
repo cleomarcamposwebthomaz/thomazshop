@@ -1,0 +1,43 @@
+<div class="visible-xs show-next mb-4">
+    <div class="btn btn-default w-100 d-flex justify-content-center"><span>Filtros</span> <i class="fa fa-filter ml-3 align-self-center"></i></div>
+</div>
+<div>
+    {% for filter_group in filter_groups %}
+    <div class="box">
+        <h3>{{ filter_group.name }}</h3>
+        <div id="filter-group{{ filter_group.filter_group_id }}" style="display:table;">
+        {% for filter in filter_group.filter %}
+            {% if filter.filter_id in filter_category %}
+            <div class="box-checkbox transition active">
+                <label>
+                    <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" checked="checked" />
+                    {{ filter.name }}
+                </label>
+            </div>
+            {% else %}
+            <div class="box-checkbox transition">
+                <label>
+                    <input type="checkbox" name="filter[]" value="{{ filter.filter_id }}" />
+                    {{ filter.name }}
+                </label>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script type="text/javascript"><!--
+  $('.box-checkbox').on('click', function() {
+    filter = [];
+
+    $('input[name^=\'filter\']:checked').each(function(element) {
+      filter.push(this.value);
+    });
+
+    location = '{{ action }}&filter=' + filter.join(',');
+
+  });
+
+//--></script>

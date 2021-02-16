@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <name>URL amigável automática para OpenCart 3.0.x</name>
+  <code>url-amigavel-automatica</code>
+  <version>3.0.0</version>
+  <author>OpenCart Brasil</author>
+  <link>http://www.opencartbrasil.com.br</link>
+  <file path="admin/view/template/common/header.twig">
+    <operation>
+      <search><![CDATA[</head>]]></search>
+      <add position="before"><![CDATA[
+        <script type="text/javascript" src="view/javascript/stringToSlug/jquery.stringToSlug.min.js"></script>
+        <script type="text/javascript" src="view/javascript/stringToSlug/speakingurl.js"></script>
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/product_form.twig">
+    <operation>
+      <search><![CDATA[{{ footer }}]]></search>
+      <add position="before"><![CDATA[
+        <script type="text/javascript"><!--
+          {% for language in languages %}
+          $('input[name="product_description[{{ language.language_id }}][name]').stringToSlug({
+            setEvents: 'keyup keydown blur',
+            getPut: 'input[name="product_seo_url[0][{{ language.language_id }}]"]',
+            space: '-',
+            replace: '/\s?\([^\)]*\)/gi',
+            AND: 'e'
+          });
+          {% endfor %}
+        //--></script>
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/category_form.twig">
+    <operation>
+      <search><![CDATA[{{ footer }}]]></search>
+      <add position="before"><![CDATA[
+        <script type="text/javascript"><!--
+          {% for language in languages %}
+          $('input[name="category_description[{{ language.language_id }}][name]').stringToSlug({
+            setEvents: 'keyup keydown blur',
+            getPut: 'input[name="category_seo_url[0][{{ language.language_id }}]"]',
+            space: '-',
+            replace: '/\s?\([^\)]*\)/gi',
+            AND: 'e'
+          });
+          {% endfor %}
+        //--></script>
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/information_form.twig">
+    <operation>
+      <search><![CDATA[{{ footer }}]]></search>
+      <add position="before"><![CDATA[
+        <script type="text/javascript"><!--
+          {% for language in languages %}
+          $('input[name="information_description[{{ language.language_id }}][title]').stringToSlug({
+            setEvents: 'keyup keydown blur',
+            getPut: 'input[name="information_seo_url[0][{{ language.language_id }}]"]',
+            space: '-',
+            replace: '/\s?\([^\)]*\)/gi',
+            AND: 'e'
+          });
+          {% endfor %}
+        //--></script>
+      ]]></add>
+    </operation>
+  </file>
+  <file path="admin/view/template/catalog/manufacturer_form.twig">
+    <operation>
+      <search><![CDATA[{{ footer }}]]></search>
+      <add position="before"><![CDATA[
+        <script type="text/javascript"><!--
+          {% for language in languages %}
+          $('input[name="name"]').stringToSlug({
+            setEvents: 'keyup keydown blur',
+            getPut: 'input[name="manufacturer_seo_url[0][{{ language.language_id }}]"]',
+            space: '-',
+            replace: '/\s?\([^\)]*\)/gi',
+            AND: 'e'
+          });
+          {% endfor %}
+        //--></script>
+      ]]></add>
+    </operation>
+  </file>
+</modification>

@@ -1,0 +1,68 @@
+{% if error_warning %}
+  <div class="alert alert-warning alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>
+{% endif %}
+
+{% if shipping_method_title %}
+  <div style="display: flex; justify-content: space-between; align-items: center;" class="selected-shipping">
+    <div>{{ shipping_method_title }}</div>
+    <div>
+      <button class="btn btn-link buttonChangeShipping">
+        Alterar 
+      </button>
+    </div>    
+  </div>
+{% endif %}
+
+{% if shipping_methods %}
+
+<div class="shipping_methods" style="display: {% if shipping_method_title %} none {% else %} block {% endif %};">
+  <div class="shipping_method" style="display: flex;">
+    <div>
+      {% for shipping_method in shipping_methods %}
+        <p><strong>{{ shipping_method.title }}</strong></p>
+        {% if not shipping_method.error %}
+        {% for quote in shipping_method.quote %}
+        <div class="radio">
+          <label> {% if quote.code == code or not code %}
+            {% set code = quote.code %}
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" checked="checked" />
+            {% else %}
+            <input type="radio" name="shipping_method" value="{{ quote.code }}" />
+            {% endif %}
+            {{ quote.title }} - {{ quote.text }}
+          </label>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-danger alert-dismissible">{{ shipping_method.error }}</div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>    
+  {% endif %}    
+
+  <div style="display: none;">
+    <p><strong>{{ text_comments }}</strong></p>
+    <p><textarea name="comment" rows="8" class="form-control">{{ comment }}</textarea></p>  
+  </div>
+
+  <div class="buttons text-center">
+      <input type="button" value="{{ button_continue }}" id="button-shipping-method" data-loading-text="{{ text_loading }}" class="btn btn-primary" />
+  </div>
+</div>
+
+<script>
+  $('.buttonChangeShipping').on('click', function() {
+    $('.shipping_methods').toggle();
+    $('.selected-shipping').toggle();
+    $('.selected-shipping').hide();
+
+    $('#paymentMethods .content').html('');
+    $('#confirmOrder').html('');
+  });  
+
+  {% if shipping_method_title %}
+    loadPaymentMethods();
+  {% endif %}
+</script>
+

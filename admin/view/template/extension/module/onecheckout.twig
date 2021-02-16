@@ -1,0 +1,104 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+
+          <div class="form-group required">
+            <label for="input-custom-fields-cpf" class="control-label col-sm-2">CPF/CNPJ</label>
+            <div class="col-sm-10">
+              <select name="module_onecheckout_document_id" id="input-custom-fields-cpf" class="form-control">
+                <option value="">{{ text_none }}</option>
+
+                {% for custom_field in custom_fields %}
+                  {% if custom_field.custom_field_id == module_onecheckout_document_id %}
+                  <option value="{{ custom_field.custom_field_id }}" selected>{{ custom_field.name }}</option>
+                  {% else %}
+                  <option value="{{ custom_field.custom_field_id }}">{{ custom_field.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              {% if error_field_custom_fields_cpf %}
+              <span class="text-danger">{{ error_field_custom_fields_cpf }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="form-group required">
+            <label for="input-custom-fields-cpf" class="control-label col-sm-2">Número</label>
+            <div class="col-sm-10">
+              <select name="module_onecheckout_number_id" id="input-custom-fields-cpf" class="form-control">
+                <option value="">{{ text_none }}</option>
+
+                {% for custom_field in custom_fields %}
+                  {% if custom_field.custom_field_id == module_onecheckout_number_id %}
+                  <option value="{{ custom_field.custom_field_id }}" selected>{{ custom_field.name }}</option>
+                  {% else %}
+                  <option value="{{ custom_field.custom_field_id }}">{{ custom_field.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+              {% if error_field_custom_fields_cpf %}
+              <span class="text-danger">{{ error_field_custom_fields_cpf }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">Cadastrar visitante automaticamente?</label>
+            <div class="col-sm-10">
+              <select name="module_onecheckout_register" id="input-status" class="form-control">
+                {% if module_onecheckout_register %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+              <p class="help-block">Esse campo é ativado somente quando o checkout como visitante estiver ativo</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_onecheckout_status" id="input-status" class="form-control">
+                {% if module_onecheckout_status %}
+                <option value="1" selected="selected">{{ text_enabled }}</option>
+                <option value="0">{{ text_disabled }}</option>
+                {% else %}
+                <option value="1">{{ text_enabled }}</option>
+                <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

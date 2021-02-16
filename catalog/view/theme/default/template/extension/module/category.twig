@@ -1,0 +1,30 @@
+<div class="box hidden-xs">
+  <h3>Categorias</h3>
+  <ul class="box-menu">
+      {% for category in categories %}
+        {% if category.category_id == category_id %}
+              <li><a href="{{ category.href }}" class="active transition">{{ category.name }}</a></li>
+              {% if category.children %}
+              <ul>
+                  {% for child in category.children %}
+                      {% if child.category_id == child_id %}
+                        <li><a href="{{ child.href }}" class="active transition">{{ child.name }}</a></li>
+                      {% else %}
+                        <li><a href="{{ child.href }}" class="transition">{{ child.name }}</a></li>
+                      {% endif %}
+                      {% if child.grandchildren %}
+                          <ul>
+                              {% for grandchild in child.grandchildren %}
+                                <li><a class="grandchild transition" href="{{ grandchild.href }}">- {{ grandchild.name }}</a></li>
+                              {% endfor %}
+                          </ul>
+                      {% endif %}
+                  {% endfor %}
+              </ul>
+              {% endif %}
+        {% else %}
+              <li><a href="{{ category.href }}" class="transition">{{ category.name }}</a></li>
+        {% endif %}
+      {% endfor %}
+  </ul>
+</div>
